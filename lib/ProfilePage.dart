@@ -1,13 +1,14 @@
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:trilicious_mvp/ProfileUtils.dart';
+import 'package:trilicious_mvp/utils/utils.dart';
 import 'widgets/CategoryCard.dart';
 import 'widgets/rosted.dart';
 import 'constants/app_large_text.dart';
 import 'constants/app_text.dart';
-import 'package:trilicious_mvp/ProfileUtils.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -17,6 +18,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  Uint8List? _image;
+
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState((){
+      _image = im;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,8 +109,97 @@ class _ProfilePageState extends State<ProfilePage> {
                             const SizedBox(
                               height: 10,
                             ),
+
+                            // F O L L O W E R S
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      height: 50,
+                                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: Colors.orange, width: 2),
+                                      ),
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            AppLargeText(text: '200',
+                                              size: 16,),
+                                            AppText(
+                                              text: 'Following',
+                                              size: 15,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  //Followers
+                                  Expanded(
+                                    child: Container(
+                                      height: 50,
+                                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: Colors.orange, width: 2),
+                                      ),
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            AppLargeText(text: '365',
+                                            size: 16,),
+                                            AppText(
+                                              text: 'Followers',
+                                              size: 15,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      height: 50,
+                                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                              color: Colors.orange, width: 2)),
+                                      child: Center(
+                                          child:Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              AppLargeText(text: '47',
+                                                size: 16,),
+                                              AppText(
+                                                text: 'Posts',
+                                                size: 15,
+                                              ),
+                                            ],
+                                          ),),
+                                    ),
+                                  ),
+                                  //Following
+                                ],
+                              ),
+                            ),
+
+                            const SizedBox(
+                              height: 10,
+                            ),
+
+                            // B I O
                             Container(
-                              width: 260,
+                              width: 400,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.grey.shade100,
@@ -106,10 +207,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     AppText(
                                       text: 'A bowl of noodle can make my day!',
-                                      size: 12,
+                                      size: 15,
                                     ),
                                     const SizedBox(
                                       width: 8,
@@ -122,9 +224,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+
+                            SizedBox(height:
+                            20,),
+
+
+                            // F O O D - S T Y L E
                             Container(
                               width: 150,
                               decoration: const BoxDecoration(
@@ -146,12 +251,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                             ),
-                            //
+
                             //todo Configure the category card and integrate here
-                            //
                             Container(
                               margin:
-                                  const EdgeInsets.only(left: 20, right: 20),
+                              const EdgeInsets.only(left: 20, right: 20),
                               height: 120,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(17),
@@ -159,7 +263,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                MainAxisAlignment.spaceEvenly,
                                 children: const [
                                   CategoryCard(
                                     categoryImage: 'assets/images/dimsum.png',
@@ -176,50 +280,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ],
                               ),
                             ),
+                            //
                             const SizedBox(
                               height: 10,
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: 35,
-                                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: Colors.orange, width: 2),
-                                      ),
-                                      child: Center(
-                                        child: AppText(
-                                          text: 'Followers',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  //Followers
-                                  Expanded(
-                                    child: Container(
-                                      height: 35,
-                                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: Colors.orange, width: 2)),
-                                      child: Center(
-                                          child: AppText(
-                                        text: 'Following',
-                                      )),
-                                    ),
-                                  ),
-                                  //Following
-                                ],
-                              ),
-                            ),
+
+                            // P O S T S
                             GridView.builder(
                               shrinkWrap: true,
                               primary: false,
@@ -280,11 +346,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           children: [
                                             MaterialButton(
                                               onPressed: () {
-                                                Provider.of<ProfileUtils>(context, listen: false).pickUserAvatar(context,ImageSource.gallery).whenComplete(()
-                                                {
-                                                  Navigator.pop(context);
-                                                }
-                                                );
+                                                selectImage();
                                               },
                                               child: Card(
                                                 color: Colors.orange,
@@ -312,14 +374,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                             SizedBox(
                                               width: 40,
                                             ),
+
                                             MaterialButton(
                                               onPressed: () {
-                                                Provider.of<ProfileUtils>(context, listen: false).pickUserAvatar(context,ImageSource.camera).whenComplete(()
-                                                {
-                                                  Navigator.pop(context);
-                                                }
-                                                );
-
+                                                selectImage(); // O N  P R E S S E D
                                               },
                                               child: Card(
                                                 color: Colors.orange,
@@ -356,17 +414,23 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: CircleAvatar(
                             backgroundColor: Color(0xffEEABFF),
                             radius: 60,
-                            child: CircleAvatar(
+                            child: _image != null
+                                ? CircleAvatar(
                               radius: 55,
-                              backgroundImage: AssetImage(
-                                'assets/images/shelly.png',
+                              backgroundImage:
+                              MemoryImage(_image!
+                                //'assets/images/shelly.png',
                                   //FileImage(
                                     //Provider.of<ProfileUtils>(context, listen: false).userAvatar
                                   ),
+                            )
+                                : const CircleAvatar(
+                              radius: 55,
+                              backgroundImage: AssetImage('assets/images/Def.png'),
+                            ),
                             ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ),

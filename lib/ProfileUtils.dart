@@ -19,7 +19,7 @@ class ProfileUtils with ChangeNotifier {
         : userAvatar = File(
             pickedUserAvatar.path,
           ) ;
-    print(userAvatar?.path);
+    print(userAvatar.path);
 
     userAvatar != null
         ? Provider.of<FirebaseOperations>(context, listen: false).uploadUserAvatar(context)

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:trilicious_mvp/HomePage.dart';
 import 'package:trilicious_mvp/ProfileUtils.dart';
 import 'package:trilicious_mvp/screens/LoginPages/LoginPage.dart';
+import 'package:trilicious_mvp/services/AuthMethods.dart';
 import 'package:trilicious_mvp/services/FirebaseOperations.dart';
 import 'package:trilicious_mvp/widgets/TextFieldInput.dart';
 
@@ -59,44 +60,30 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.fromLTRB(40,20,40,20),
                     child: Column(
                       children: [
-                        SizedBox(height: 30,),
+                        const SizedBox(height: 30,),
                         Image.asset('assets/images/Orangefont.png', height: 30,),
-                        SizedBox(height:30,),
+                        const SizedBox(height:30,),
                        TextFieldInput(textEditingController: userNameController,
                          hintText: 'Set your username',
                          textInputType: TextInputType.text,
                          isPass: false
                        ),
-                        SizedBox(height: 20,),
+                        const SizedBox(height: 20,),
                         TextFieldInput(textEditingController: _emailController,
                             hintText: 'Email',
                             textInputType: TextInputType.text,
                             isPass: false
                         ),
-                        SizedBox(height: 20,),
+                        const SizedBox(height: 20,),
                         TextFieldInput(textEditingController: _passwordController,
                             hintText: 'Set a Password',
                             textInputType: TextInputType.text,
                             isPass: true
                         ),
-                        SizedBox(height: 20,),
+                        const SizedBox(height: 20,),
                         GestureDetector(
-                          onTap: (){
-                            if(_emailController.text.isNotEmpty) {Provider.of<Authentication>(context, listen: false).registerAccount(_emailController.text, _passwordController.text).whenComplete((){
-
-                              //Creating Collection
-                              Provider.of<FirebaseOperations>(context, listen: false).createUserCollection(context, {
-                                'useruid': Provider.of<Authentication>(context, listen: false).getUserUid,
-                                'useremail': _emailController.text,
-                                'username': userNameController,
-                                'userimage':Provider.of<ProfileUtils>(context, listen: false).getUserAvatarUrl,
-                              });
-                              //Navigate to HomePage()
-                              Navigator.pushReplacement(context, PageTransition(child: HomePage(), type: PageTransitionType.leftToRight));});
-                            }
-                            else{
-                              Navigator.pushReplacement(context, PageTransition(child: RegisterPage(), type: PageTransitionType.fade));
-                            }
+                          onTap: () async{
+                            AuthMethods().signUpUser(email: _emailController.text, password: _passwordController.text, username: userNameController.text);
                           },
                           child: Container(
                             height: 60,
@@ -107,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             child: Center(
                               child: Text('Sign-up',style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20
                                   )
@@ -115,8 +102,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
+                        const Padding(
+                          padding: EdgeInsets.all(20.0),
                           child: Divider(
                             color: Colors.grey,
                           ),
@@ -124,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         MaterialButton(
                           onPressed: () {
                             Provider.of<Authentication>(context, listen: false).signInWithGoogle().whenComplete((){
-                              Navigator.pushReplacement(context, PageTransition(child: HomePage(), type: PageTransitionType.leftToRight));
+                              Navigator.pushReplacement(context, PageTransition(child: const HomePage(), type: PageTransitionType.leftToRight));
                             });
                           },
                           child: Container(
@@ -137,22 +124,22 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: Center(
                               child: Row(
                                 children: [
-                                  Spacer(flex: 2,),
+                                  const Spacer(flex: 2,),
                                   Image.asset('assets/images/google.png', height: 40,),
-                                  Spacer(flex: 1,),
+                                  const Spacer(flex: 1,),
                                   Text('Sign-up with Google',style: GoogleFonts.montserrat(
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                           fontSize: 15
                                       )
                                   ),
                                   ),
-                                  Spacer(flex: 2,),
+                                  const Spacer(flex: 2,),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 20,),
+                        const SizedBox(height: 20,),
                         TextButton(
                           onPressed: (){
                             //Redirect to Register Page

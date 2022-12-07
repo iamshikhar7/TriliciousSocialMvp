@@ -8,6 +8,8 @@ import 'package:trilicious_mvp/HomePage.dart';
 import 'package:trilicious_mvp/screens/LoginPages/RegisterPage.dart';
 import 'package:trilicious_mvp/services/Authentication.dart';
 
+import '../../widgets/TextFieldInput.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -45,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Container
             (height: double.maxFinite,
+              width: double.maxFinite,
               child: Image.asset('assets/images/Frame1.png', fit: BoxFit.cover,),
             ),
             Container(
@@ -65,38 +68,22 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 30,),
                       Image.asset('assets/images/Orangefont.png', height: 30,),
                        const SizedBox(height:30,),
-                       TextField(
-                         controller: _emailController,
-                         cursorColor: Colors.orange,
-                         decoration: InputDecoration(
-                           enabledBorder: OutlineInputBorder(
-                             borderSide: BorderSide(color: Colors.grey.shade300),
-                             borderRadius: BorderRadius.circular(12),
-                           ),
-                           focusedBorder: OutlineInputBorder(
-                             borderSide: const BorderSide(color: Colors.orange),
-                             borderRadius: BorderRadius.circular(12),
-                           ),
-                            hintText: 'Email',
-                         ),
-                       ),
-                      const SizedBox(height: 20,),
-                      TextField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        cursorColor: Colors.orange,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.orange),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: 'Password',
-                        ),
+
+                      //  T E X T   F I E L D S
+
+                      TextFieldInput(textEditingController: _emailController,
+                          hintText: 'Email',
+                          textInputType: TextInputType.text,
+                          isPass: false
                       ),
+                      const SizedBox(height: 20,),
+                      TextFieldInput(textEditingController: _passwordController,
+                          hintText: 'Password',
+                          textInputType: TextInputType.text,
+                          isPass: true
+                      ),
+
+
                       const SizedBox(height: 20,),
                       GestureDetector(
                         onTap: (){
