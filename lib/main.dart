@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:trilicious_mvp/services/Authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trilicious_mvp/services/FirebaseOperations.dart';
+import 'package:trilicious_mvp/services/local/storage_services.dart';
 
 import 'firebase_options.dart';
 
@@ -18,6 +19,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await LocalStorageService.getInstance();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(MyApp()));
 }
@@ -35,7 +37,9 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: SplashScreen(),
+          home: LocalStorageService.instance.isLoggedIn
+              ? HomePage()
+              : SplashScreen(),
         ),
         providers: [
           ChangeNotifierProvider(create: (_) => ProfileUtils()),
