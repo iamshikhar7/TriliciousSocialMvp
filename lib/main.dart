@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:trilicious_mvp/HomePage.dart';
 import 'package:trilicious_mvp/ProfileUtils.dart';
 import 'package:trilicious_mvp/screens/LoginPages/LoginPage.dart';
@@ -17,27 +18,30 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(MyApp()));
 }
 
-
-
-
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: HomePage(),
+          home: SplashScreen(),
         ),
         providers: [
           ChangeNotifierProvider(create: (_) => ProfileUtils()),
           ChangeNotifierProvider(create: (_) => FirebaseOperations()),
           ChangeNotifierProvider(create: (_) => Authentication()),
-          ChangeNotifierProvider(create: (_) => ProviderLoginPage())]
-    );
+          ChangeNotifierProvider(create: (_) => ProviderLoginPage())
+        ]);
   }
 }
