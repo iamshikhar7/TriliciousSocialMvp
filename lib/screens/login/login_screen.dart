@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
-import '../../app_theme.dart';
-import '../../data/services/local/storage_service.dart';
+import '../../HomePage.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/user_repository.dart';
+import '../../services/Authentication.dart';
+import '../../services/local/storage.dart';
 import '../login/bloc/login_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -22,7 +24,6 @@ class LoginScreen extends StatelessWidget {
         userRepository: context.read<UserRepository>(),
       ),
       child: const Scaffold(
-        backgroundColor: AppTheme.lightpink,
         body: LoginBody(),
       ),
     );
@@ -50,66 +51,86 @@ class LoginBody extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is SignInLoading) {
-          return const Center(
-              child: CircularProgressIndicator(
-            color: AppTheme.pink,
-          ));
+          return const Center(child: CircularProgressIndicator());
         }
         if (state is Unauthenticated) {
-          return SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SvgPicture.asset(
-                  'assets/images/login.svg',
-                  width: MediaQuery.of(context).size.width,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 48.w, top: 68.h, bottom: 46.h),
-                  child: Text(
-                    'Login',
-                    style: AppTheme.h1.copyWith(),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                  child: SizedBox(
-                    width: 282.w,
-                    height: 40.h,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 42.w),
-                      child: MaterialButton(
+          Stack(children: [
+            Container(
+              height: double.maxFinite,
+              width: double.maxFinite,
+              child: Image.asset(
+                'assets/images/Frame1.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Container(
+              color: Colors.black.withOpacity(0.4),
+            ),
+            Center(
+              child: Container(
+                height: 240,
+                width: 340,
+                decoration: BoxDecoration(
+                    color: Colors.white, borderRadius: BorderRadius.circular(30)),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(40, 20, 40, 20),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Image.asset(
+                        'assets/images/Orangefont.png',
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      MaterialButton(
                         onPressed: () {
                           context.read<LoginBloc>().add(const SignInEvent());
                         },
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.r),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Login with Google',
-                              style: AppTheme.h2.copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppTheme.black,
-                              ),
+                        child: Container(
+                          height: 70,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                              border: Border.all(width: 2, color: Colors.orange)),
+                          child: Center(
+                            child: Row(
+                              children: [
+                                const Spacer(
+                                  flex: 2,
+                                ),
+                                Image.asset(
+                                  'assets/images/google.png',
+                                  height: 40,
+                                ),
+                                const Spacer(
+                                  flex: 1,
+                                ),
+                                Text(
+                                  'Sign in with Google',
+                                  style: GoogleFonts.montserrat(
+                                      textStyle: const TextStyle(fontSize: 15)),
+                                ),
+                                const Spacer(
+                                  flex: 2,
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 8.w),
-                            SvgPicture.asset('assets/icons/google_icon.svg'),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 100.h),
-                Center(
-                    child: SvgPicture.asset('assets/images/login_cover.svg')),
-              ],
+              ),
             ),
-          );
+          ]),
         }
         return Container();
       },
