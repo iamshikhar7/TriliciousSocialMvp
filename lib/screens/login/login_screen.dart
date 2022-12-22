@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginBloc(
         authRepository: context.read<AuthRepository>(),
-        userRepository: context.read<UserRepository>(),
+        // userRepository: context.read<UserRepository>(),
       ),
       child: const Scaffold(
         body: LoginBody(),
@@ -39,10 +39,10 @@ class LoginBody extends StatelessWidget {
       listener: (context, state) {
         if (state is SignInSuccess) {
           LocalStorageService.instance.isLoggedIn = true;
-          state.path == 'feed'
-              ? LocalStorageService.instance.isUserDetails = true
-              : LocalStorageService.instance.isUserDetails = false;
-          Get.offAllNamed(state.path);
+          // state.path == 'feed'
+          //     ? LocalStorageService.instance.isUserDetails = true
+          //     : LocalStorageService.instance.isUserDetails = false;
+          // Get.offAllNamed(state.path);
         }
         if (state is SignInError) {
           ScaffoldMessenger.of(context)
@@ -54,7 +54,7 @@ class LoginBody extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (state is Unauthenticated) {
-          Stack(children: [
+          return Stack(children: [
             Container(
               height: double.maxFinite,
               width: double.maxFinite,
@@ -71,7 +71,8 @@ class LoginBody extends StatelessWidget {
                 height: 240,
                 width: 340,
                 decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.circular(30)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30)),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(40, 20, 40, 20),
                   child: Column(
@@ -95,7 +96,8 @@ class LoginBody extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.white,
-                              border: Border.all(width: 2, color: Colors.orange)),
+                              border:
+                                  Border.all(width: 2, color: Colors.orange)),
                           child: Center(
                             child: Row(
                               children: [
@@ -130,7 +132,7 @@ class LoginBody extends StatelessWidget {
                 ),
               ),
             ),
-          ]),
+          ]);
         }
         return Container();
       },

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:trilicious_mvp/HomePage.dart';
 import 'package:trilicious_mvp/ProfileUtils.dart';
-import 'package:trilicious_mvp/screens/LoginPages/LoginPage.dart';
+import 'package:trilicious_mvp/screens/login/login_screen.dart';
 import 'package:trilicious_mvp/screens/LoginPages/ProviderLoginPage.dart';
 import 'package:trilicious_mvp/screens/LoginPages/SplashScreen.dart';
 import 'package:provider/provider.dart';
@@ -36,12 +36,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: LocalStorageService.instance.isLoggedIn
-              ? HomePage()
-              : SplashScreen(),
-        ),
+        child:
+            MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen()),
         providers: [
           ChangeNotifierProvider(create: (_) => ProfileUtils()),
           ChangeNotifierProvider(create: (_) => FirebaseOperations()),

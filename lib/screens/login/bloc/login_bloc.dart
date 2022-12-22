@@ -10,14 +10,12 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({required this.authRepository, required this.userRepository})
-      : super(const Unauthenticated()) {
+  LoginBloc({required this.authRepository}) : super(const Unauthenticated()) {
     on<SignInEvent>((event, emit) async {
       emit(const SignInLoading());
       try {
         final result = await authRepository.signInwithGoogle();
-        final path = await userRepository.getPath();
-        emit(SignInSuccess(result.toString(), path));
+        emit(SignInSuccess(result.toString()));
       } catch (e) {
         print(e);
         if (e is FirebaseAuthException) {
@@ -29,5 +27,4 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     });
   }
   final AuthRepository authRepository;
-  final UserRepository userRepository;
 }

@@ -8,12 +8,8 @@ class LoginState extends Equatable {
 }
 
 class SignInSuccess extends LoginState {
-  const SignInSuccess(
-    this.result,
-    this.path,
-  );
+  const SignInSuccess(this.result);
   final String result;
-  final String path;
 
   @override
   List<Object?> get props => [result];
