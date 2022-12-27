@@ -13,10 +13,10 @@ import 'constants/app_large_text.dart';
 import 'widgets/AdBanner.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  static const String id = 'homepage';
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -25,8 +25,7 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
 
   setBottomBarIndex(index) {
-    if(mounted)
-    {
+    if (mounted) {
       setState(() {
         currentIndex = index;
       });
@@ -48,8 +47,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-
 
   bottomNavBar() {
     double displayWidth = MediaQuery.of(context).size.width;
@@ -151,17 +148,20 @@ class _HomePageState extends State<HomePage> {
                                   : 20,
                             ),
                             InkWell(
-                             // onTap: setBottomBarIndex(index),
+                              // onTap: setBottomBarIndex(index),
                               child: IconButton(
-                                icon : Icon(
+                                icon: Icon(
                                   listOfIcons[index],
                                   size: displayWidth * .04,
                                   color: index == currentIndex
                                       ? Colors.white
                                       : Colors.white.withOpacity(0.7),
-                                ), onPressed: () { setState(() {
-                                  currentIndex = index ;
-                                }); },
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    currentIndex = index;
+                                  });
+                                },
                               ),
                             ),
                           ],

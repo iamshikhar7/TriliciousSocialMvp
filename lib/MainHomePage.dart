@@ -22,6 +22,7 @@ import 'constants/app_text.dart';
 class MainHomePage extends StatefulWidget {
   const MainHomePage({Key? key}) : super(key: key);
 
+  static const String id = 'mainhomepage';
   @override
   State<MainHomePage> createState() => _MainHomePageState();
 }

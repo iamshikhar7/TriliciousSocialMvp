@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:trilicious_mvp/HomePage.dart';
-import 'package:trilicious_mvp/ProfileUtils.dart';
-import 'package:trilicious_mvp/screens/login/login_screen.dart';
-import 'package:trilicious_mvp/screens/LoginPages/ProviderLoginPage.dart';
-import 'package:trilicious_mvp/screens/LoginPages/SplashScreen.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:trilicious_mvp/services/Authentication.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:trilicious_mvp/services/FirebaseOperations.dart';
+
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trilicious_mvp/domain/repositories/auth_repository.dart';
+import 'package:trilicious_mvp/screens/login/login_screen.dart';
 import 'package:trilicious_mvp/services/local/storage.dart';
 
+import 'AppRouter.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -32,17 +31,29 @@ class MyApp extends StatefulWidget {
   State<StatefulWidget> createState() => _MyAppState();
 }
 
+//
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        child:
-            MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen()),
-        providers: [
-          ChangeNotifierProvider(create: (_) => ProfileUtils()),
-          ChangeNotifierProvider(create: (_) => FirebaseOperations()),
-          ChangeNotifierProvider(create: (_) => Authentication()),
-          ChangeNotifierProvider(create: (_) => ProviderLoginPage())
-        ]);
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (BuildContext context) => AuthRepository(),
+        ),
+      ],
+      child: ScreenUtilInit(
+        builder: (__, chinldN_) {
+          return GetMaterialApp(
+            title: 'Gifty',
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: AppRouter.generateRoute,
+            initialRoute: LocalStorageService.instance.isLoggedIn
+                ? HomePage.id
+                : LoginScreen.id,
+          );
+        },
+        designSize: const Size(360, 640),
+      ),
+    );
   }
 }
