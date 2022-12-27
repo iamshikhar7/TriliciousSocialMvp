@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "871527419958",
+    "project_id": "trilicioussocial",
+    "storage_bucket": "trilicioussocial.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871527419958:android:8e8cc801f569b56fd74897",
+        "android_client_info": {
+          "package_name": "com.example.trilicious_mvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871527419958-15bpfsbkohbsk32pu1s3r94eq78jmnb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trilicious_mvp",
+            "certificate_hash": "42e363812c3503c51b3ba740e4633dda5fff8346"
+          }
+        },
+        {
+          "client_id": "871527419958-g7spbqelphdog1i6l7atqnhja0a31bh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trilicious_mvp",
+            "certificate_hash": "b3515249ad8c451ed7203da8122fc05a8ed23e91"
+          }
+        },
+        {
+          "client_id": "871527419958-e3grme3behjtcnjs19nr8fvst263kn9g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAizNqt3CDlk3cpfdVeZcc7LOrzJxzgHyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871527419958-e3grme3behjtcnjs19nr8fvst263kn9g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "871527419958-lp3cqolb7mvk5q6330s3vv2ulgqbj7r7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.triliciousMvp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
